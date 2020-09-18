@@ -1,23 +1,23 @@
 export const createAsync = cb => {
   const async = async (...params) => {
-    async.pending.cb?.(true);
+    async.pending.cb?.(true)
 
     try {
-      const result = await cb(...params);
+      const result = await cb(...params)
 
-      async.done.cb?.(result);
+      async.done.cb?.(result)
 
-      return result;
+      return result
     } catch ({ message }) {
-      async.fail.cb?.(message);
+      async.fail.cb?.(message)
     } finally {
-      async.pending.cb?.(false);
+      async.pending.cb?.(false)
     }
-  };
+  }
 
-  async.pending = {};
-  async.done = {};
-  async.fail = {};
+  async.pending = {}
+  async.done = {}
+  async.fail = {}
 
-  return async;
-};
+  return async
+}
