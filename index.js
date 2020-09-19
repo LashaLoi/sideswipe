@@ -1,3 +1,1 @@
-export { createInstance } from "./src/createInstance"
-export { createAction } from "./src/createAction"
-export { createAsync } from "./src/createAsync"
+export { createInstance, createAction, createAsync } from "./src"
