@@ -3,25 +3,13 @@ export const createInstance = defaultState => {
   let subscribeCallbacks = []
 
   const add = (action, cb) => {
-    const handler = params => {
-      state = cb(state, params)
-
-      subscribeCallbacks.forEach(subscribeCb => subscribeCb({ state, params }))
-    }
-
-    action.cbs = action.cbs ? [...action.cbs, handler] : [handler]
+    handleAction(action, () => cb(state, params))
 
     return instance
   }
 
   const reset = action => {
-    const handler = () => {
-      state = defaultState
-
-      subscribeCallbacks.forEach(subscribeCb => subscribeCb({ state, params: defaultState }))
-    }
-
-    action.cbs = action.cbs ? [...action.cbs, handler] : [handler]
+    handleAction(action, () => defaultState)
 
     return instance
   }
@@ -35,6 +23,16 @@ export const createInstance = defaultState => {
   }
 
   const getState = () => state
+
+  const handleAction = (action, cb) => {
+    const handler = params => {
+      state = cb()
+
+      subscribeCallbacks.forEach(subscribeCb => subscribeCb({ state, params }))
+    }
+
+    action.cbs = action.cbs ? [...action.cbs, handler] : [handler]
+  }
 
   const instance = {
     getState,
