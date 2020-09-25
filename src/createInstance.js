@@ -3,7 +3,7 @@ export const createInstance = defaultState => {
   let subscribeCallbacks = []
 
   const add = (action, cb) => {
-    handleAction(action, () => cb(state, params))
+    handleAction(action, (...params) => cb(...params))
 
     return instance
   }
@@ -26,7 +26,7 @@ export const createInstance = defaultState => {
 
   const handleAction = (action, cb) => {
     const handler = params => {
-      state = cb()
+      state = cb(state, params)
 
       subscribeCallbacks.forEach(subscribeCb => subscribeCb({ state, params }))
     }
