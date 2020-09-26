@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "example": "babel-node example/index.js"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,8 @@
     "@babel/core": "^7.11.6",
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.11.5",
+    "babel-polyfill": "^6.26.0",
+    "jest": "^26.4.2",
     "prettier": "^2.1.2"
   },
   "dependencies": {

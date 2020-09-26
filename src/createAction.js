@@ -1,5 +1,5 @@
 export const createAction = () => {
-  const action = params => action.cbs.forEach(cb => cb(params))
+  const action = params => action.cbs?.forEach(fn => fn(params))
 
   return action
 }
