@@ -1,38 +1,42 @@
 export const createInstance = defaultState => {
   let state = defaultState
-  let subscribeCallbacks = []
+  let handlers = []
 
   const add = (action, cb) => {
-    handleAction(action, (...params) => cb(...params))
+    const handler = params => {
+      state = cb(state, params)
+
+      notify()
+    }
+
+    action.cbs = action.cbs ? [...action.cbs, handler] : [handler]
 
     return instance
   }
 
   const reset = action => {
-    handleAction(action, () => defaultState)
+    const handler = () => {
+      state = defaultState
+
+      notify()
+    }
+
+    action.cbs = action.cbs ? [...action.cbs, handler] : [handler]
 
     return instance
   }
 
   const subscribe = cb => {
-    subscribeCallbacks = [...subscribeCallbacks, cb]
+    handlers = [...handlers, cb]
 
     return () => {
-      subscribeCallbacks = subscribeCallbacks.filter(subscribeCb => subscribeCb !== cb)
+      handlers = handlers.filter(fn => fn !== cb)
     }
   }
 
   const getState = () => state
 
-  const handleAction = (action, cb) => {
-    const handler = params => {
-      state = cb(state, params)
-
-      subscribeCallbacks.forEach(subscribeCb => subscribeCb({ state, params }))
-    }
-
-    action.cbs = action.cbs ? [...action.cbs, handler] : [handler]
-  }
+  const notify = () => handlers.forEach(fn => fn({ state, params }))
 
   const instance = {
     getState,
