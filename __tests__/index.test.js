@@ -1,6 +1,6 @@
 import "babel-polyfill"
 
-import { createAction, createAsync, createInstance } from "./"
+import { createAction, createAsync, createInstance } from "../src"
 
 describe("createInstance", () => {
   it("should create store instance", () => {
