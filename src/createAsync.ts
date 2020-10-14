@@ -1,18 +1,4 @@
-type Status<T = unknown> = {
-  pending: {
-    cbs?: ((params?: boolean) => void)[]
-  }
-  done: {
-    cbs?: ((params?: T) => void)[]
-  }
-  fail: {
-    cbs?: ((params?: string) => void)[]
-  }
-}
-
-export type AsyncCbs<T> = Status["pending"] | Status<T>["done"] | Status["fail"]
-export type AsyncResult<T> = ((params?: T) => Promise<T | undefined>) & Status<T>
-export type Async<T> = (cb: (params?: T) => Promise<T>) => AsyncResult<T>
+import { AsyncResult } from "./index.d"
 
 export function createAsync<T>(cb: (params?: T) => Promise<T>): AsyncResult<T> {
   const async: AsyncResult<T> = async params => {

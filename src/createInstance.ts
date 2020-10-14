@@ -1,22 +1,4 @@
-import { ActionResult } from "./createAction"
-import { AsyncCbs } from "./createAsync"
-
-type SubscribeFn<T> = (params: { state: T; params: unknown }) => void
-type UnsubscribeFn = () => void
-
-type Fn<T> = (state: T, params: unknown) => T
-
-type AddCb<T> = (action: ActionResult<T> | AsyncCbs<any>, fn: Fn<T>) => InstanceResult<T>
-type ResetCb<T> = (action: ActionResult<T> | AsyncCbs<any>) => InstanceResult<T>
-type SubscribeCb<T> = (cb: SubscribeFn<T>) => UnsubscribeFn
-type GetStateCb<T> = () => T
-
-export type InstanceResult<T> = {
-  subscribe: SubscribeCb<T>
-  getState: GetStateCb<T>
-  reset: ResetCb<T>
-  add: AddCb<T>
-}
+import { InstanceResult, SubscribeFn, SubscribeCb, AddCb, ResetCb, GetStateCb } from "./index.d"
 
 export function createInstance<T = unknown>(defaultState: T): InstanceResult<T> {
   let _state = defaultState
