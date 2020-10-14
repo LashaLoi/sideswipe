@@ -1,4 +1,4 @@
-type A<T = unknown> = {
+type Status<T = unknown> = {
   pending: {
     cbs?: ((params?: boolean) => void)[]
   }
@@ -10,12 +10,12 @@ type A<T = unknown> = {
   }
 }
 
-export type AsyncCbs<T> = A["pending"] | A<T>["done"] | A["fail"]
+export type AsyncCbs<T> = Status["pending"] | Status<T>["done"] | Status["fail"]
+export type AsyncResult<T> = ((params?: T) => Promise<T | undefined>) & Status<T>
+export type Async<T> = (cb: (params?: T) => Promise<T>) => AsyncResult<T>
 
-export type Async<T> = ((params?: T) => Promise<T | undefined>) & A<T>
-
-export function createAsync<T>(cb: (params?: T) => Promise<T>): Async<T> {
-  const async: Async<T> = async params => {
+export function createAsync<T>(cb: (params?: T) => Promise<T>): AsyncResult<T> {
+  const async: AsyncResult<T> = async params => {
     async.pending.cbs?.forEach(cb => cb(true))
 
     try {

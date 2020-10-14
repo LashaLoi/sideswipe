@@ -5,7 +5,7 @@ export const decrement = createAction<number>()
 
 export const countAsync = createAsync<number>(() => new Promise(res => setTimeout(() => res(10), 2000)))
 
-export const iloading = createInstance<boolean>(false)
+export const iloading = createInstance(false)
   .add(countAsync.pending, () => true)
   .reset(countAsync.done)
   .reset(countAsync.fail)
