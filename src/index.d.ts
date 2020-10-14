@@ -39,3 +39,5 @@ export type InstanceResult<T> = {
   reset: ResetCb<T>
   add: AddCb<T>
 }
+
+export type Instance<T> = (defaultState: T) => InstanceResult<T>
