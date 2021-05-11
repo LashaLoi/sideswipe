@@ -31,7 +31,7 @@ increment(1)
 
 decrement()
 // {state: 1, params: undefined}
-;(async () => {
+(async () => {
   await countAsync()
   // {state: 10, params: 10}
 })()
